@@ -1,0 +1,36 @@
+{% extends 'contacts/base.html' %}
+
+{% block content %}
+<div class="contacts-container">
+    <div class="contacts-grid">
+        {% for contact in contacts %}
+        <div class="contact-card">
+            <h2 class="contact-name">{{ contact.name }}</h2>
+            <div class="contact-details">
+                {% if contact.relationship %}
+                    <p class="contact-detail">{{ contact.relationship }}</p>
+                {% endif %}
+                {% if contact.phone %}
+                    <p class="contact-detail">{{ contact.phone }}</p>
+                {% endif %}
+                {% if contact.email %}
+                    <p class="contact-detail">{{ contact.email }}</p>
+                {% endif %}
+            </div>
+            <div class="contact-actions">
+                <a href="{% url 'contact_edit' contact.pk %}" class="action-button edit-button" title="Editar">
+                    <span class="icon">✏️</span>
+                </a>
+                <a href="{% url 'contact_delete' contact.pk %}" class="action-button delete-button" title="Deletar">
+                    <span class="icon">❌</span>
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-contacts">
+            <p>Nenhum contato encontrado. <a href="{% url 'contact_create' %}">Adicione o primeiro contato</a></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

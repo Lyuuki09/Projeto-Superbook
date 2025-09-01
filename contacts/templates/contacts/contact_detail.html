@@ -1,0 +1,41 @@
+{% extends 'contacts/base.html' %}
+
+{% block title %}{{ contact.name }} - My Contacts{% endblock %}
+
+{% block content %}
+<div class="detail-container">
+    <div class="detail-card">
+        <h2 class="detail-title">{{ contact.name }}</h2>
+        <div class="contact-details">
+            {% if contact.relationship %}
+                <div class="detail-item">
+                    <strong>Relacionamento:</strong> {{ contact.relationship }}
+                </div>
+            {% endif %}
+            {% if contact.phone %}
+                <div class="detail-item">
+                    <strong>Telefone:</strong> {{ contact.phone }}
+                </div>
+            {% endif %}
+            {% if contact.email %}
+                <div class="detail-item">
+                    <strong>Email:</strong> {{ contact.email }}
+                </div>
+            {% endif %}
+            <div class="detail-item">
+                <strong>Criado em:</strong> {{ contact.created_at|date:"d/m/Y H:i" }}
+            </div>
+            {% if contact.updated_at != contact.created_at %}
+                <div class="detail-item">
+                    <strong>Atualizado em:</strong> {{ contact.updated_at|date:"d/m/Y H:i" }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="detail-actions">
+            <a href="{% url 'contact_edit' contact.pk %}" class="btn btn-primary">Editar</a>
+            <a href="{% url 'contact_delete' contact.pk %}" class="btn btn-danger">Deletar</a>
+            <a href="{% url 'contact_list' %}" class="btn btn-secondary">Voltar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

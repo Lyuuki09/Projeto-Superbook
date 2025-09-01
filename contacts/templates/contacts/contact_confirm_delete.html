@@ -1,0 +1,33 @@
+{% extends 'contacts/base.html' %}
+
+{% block title %}Deletar Contato - My Contacts{% endblock %}
+
+{% block content %}
+<div class="delete-container">
+    <div class="delete-card">
+        <h2 class="delete-title">Confirmar Exclusão</h2>
+        <p class="delete-message">
+            Tem certeza que deseja deletar o contato <strong>{{ contact.name }}</strong>?
+        </p>
+        <div class="contact-preview">
+            <h3>{{ contact.name }}</h3>
+            {% if contact.relationship %}
+                <p>{{ contact.relationship }}</p>
+            {% endif %}
+            {% if contact.phone %}
+                <p>{{ contact.phone }}</p>
+            {% endif %}
+            {% if contact.email %}
+                <p>{{ contact.email }}</p>
+            {% endif %}
+        </div>
+        <form method="post" class="delete-form">
+            {% csrf_token %}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-danger">Sim, Deletar</button>
+                <a href="{% url 'contact_list' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
