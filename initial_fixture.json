@@ -8,7 +8,31 @@
       "poder_principal": "Superinteligência",
       "cidade": "Nova York",
       "historia": "Um esquilo que luta contra o crime.",
-      "criado_em": "2025-07-20T12:00:00Z"
+      "criado_em": "2025-01-05T12:00:00Z"
+    }
+  },
+  {
+    "model": "heroes.Hero",
+    "pk": 2,
+    "fields": {
+      "codinome": "Batman",
+      "nome_real": "Bruce Wayne",
+      "poder_principal": "Inteligência e Tecnologia",
+      "cidade": "Gotham City",
+      "historia": "O Cavaleiro das Trevas que protege Gotham City.",
+      "criado_em": "2025-01-05T12:00:00Z"
+    }
+  },
+  {
+    "model": "heroes.Hero",
+    "pk": 3,
+    "fields": {
+      "codinome": "Superman",
+      "nome_real": "Clark Kent",
+      "poder_principal": "Superforça e Voo",
+      "cidade": "Metropolis",
+      "historia": "O último filho de Krypton que protege a Terra.",
+      "criado_em": "2025-01-05T12:00:00Z"
     }
   },
   {
@@ -16,9 +40,53 @@
     "pk": 1,
     "fields": {
       "autor": 1,
-      "mensagem": "Bem-vindo ao SuperBook!",
-      "criado_em": "2025-07-20T12:00:00Z"
+      "mensagem": "Bem-vindo ao SuperBook! Aqui os heróis podem compartilhar suas aventuras.",
+      "criado_em": "2025-01-05T12:00:00Z"
+    }
+  },
+  {
+    "model": "posts.Post",
+    "pk": 2,
+    "fields": {
+      "autor": 2,
+      "mensagem": "A noite em Gotham está mais perigosa do que nunca. Mas estou aqui para proteger.",
+      "criado_em": "2025-01-05T12:00:00Z"
+    }
+  },
+  {
+    "model": "posts.Post",
+    "pk": 3,
+    "fields": {
+      "autor": 3,
+      "mensagem": "Sempre há esperança. Acreditem no bem que existe em cada pessoa.",
+      "criado_em": "2025-01-05T12:00:00Z"
+    }
+  },
+  {
+    "model": "posts.Like",
+    "pk": 1,
+    "fields": {
+      "heroi": 2,
+      "post": 1,
+      "criado_em": "2025-01-05T12:00:00Z"
+    }
+  },
+  {
+    "model": "posts.Like",
+    "pk": 2,
+    "fields": {
+      "heroi": 3,
+      "post": 1,
+      "criado_em": "2025-01-05T12:00:00Z"
+    }
+  },
+  {
+    "model": "posts.Like",
+    "pk": 3,
+    "fields": {
+      "heroi": 1,
+      "post": 2,
+      "criado_em": "2025-01-05T12:00:00Z"
     }
   }
 ]
-

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Heróis - SuperBook{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-list {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .hero-item {
+        background-color: #f8f9fa;
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 5px;
+        border-left: 4px solid #007bff;
+    }
+    
+    .hero-codinome {
+        font-weight: bold;
+        color: #007bff;
+        font-size: 1.2em;
+    }
+    
+    .hero-poder {
+        color: #666;
+        margin-top: 5px;
+    }
+    
+    .hero-cidade {
+        color: #888;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+    
+    .no-heroes {
+        text-align: center;
+        color: #666;
+        font-style: italic;
+        padding: 40px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="page-title">🦸‍♂️ Heróis Cadastrados</h1>
+    
+    {% if herois %}
+        <ul class="hero-list">
+            {% for hero in herois %}
+            <li class="hero-item">
+                <div class="hero-codinome">{{ hero.codinome }}</div>
+                {% if hero.nome_real %}
+                    <div class="hero-real-name">Nome real: {{ hero.nome_real }}</div>
+                {% endif %}
+                <div class="hero-poder">Poder principal: {{ hero.poder_principal }}</div>
+                <div class="hero-cidade">Cidade: {{ hero.cidade }}</div>
+                {% if hero.historia %}
+                    <div class="hero-history" style="margin-top: 10px; font-size: 0.9em; color: #555;">
+                        {{ hero.historia|truncatewords:20 }}
+                    </div>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="no-heroes">
+            <p>Nenhum herói cadastrado ainda.</p>
+            <p>Acesse o <a href="/admin/">admin</a> para adicionar heróis!</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

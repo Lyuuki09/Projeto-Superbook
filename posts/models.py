@@ -9,7 +9,6 @@ class Post(models.Model):
     def __str__(self):
         return f"{self.autor.codinome}: {self.mensagem[:30]}..."
 
-
 class Like(models.Model):
     heroi = models.ForeignKey(Hero, on_delete=models.CASCADE)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
