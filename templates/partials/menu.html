@@ -1,7 +1,10 @@
 <div class="container">
-    <ul class="d-flex justify-content-center align-items-center list-unstyled mb-0">
-        <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'lista_herois' %}">🦸‍♂️ Heróis</a></li>
-        <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'lista_posts' %}">📝 Posts</a></li>
-        <li class="mx-2"><a class="text-white text-decoration-none" href="/admin/">⚙️ Admin</a></li>
-    </ul>
+  <ul class="d-flex justify-content-center align-items-center list-unstyled mb-0 flex-wrap">
+    <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'lista_herois' %}">🦸‍♂️ Heróis</a></li>
+    <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'criar_heroi' %}">➕ Novo Herói</a></li>
+    <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'lista_posts' %}">📝 Posts</a></li>
+    <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'criar_post' %}">➕ Novo Post</a></li>
+    <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'contato' %}">📧 Contato</a></li>
+    <li class="mx-2"><a class="text-white text-decoration-none" href="/admin/">⚙️ Admin</a></li>
+  </ul>
 </div>

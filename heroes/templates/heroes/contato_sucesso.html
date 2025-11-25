@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Contato Enviado com Sucesso{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="alert alert-success text-center" role="alert">
+    <h2>✅ Contato enviado com sucesso!</h2>
+    <p>Obrigado por entrar em contato conosco. Responderemos em breve.</p>
+    <a href="{% url 'lista_herois' %}" class="btn btn-primary mt-3">Voltar para Heróis</a>
+  </div>
+</div>
+{% endblock %}

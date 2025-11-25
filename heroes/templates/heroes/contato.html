@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Formulário de Contato{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="mb-4">📧 Formulário de Contato</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <form method="POST" class="card p-4 shadow-sm">
+        {% csrf_token %}
+
+        {% for field in form %}
+          <div class="mb-3">
+            <!-- Rótulo do campo -->
+            {{ field.label_tag }}
+
+            <!-- Campo em si -->
+            {{ field }}
+
+            <!-- Se houver erros nesse campo -->
+            {% if field.errors %}
+              <div class="text-danger mt-2">
+                {% for error in field.errors %}
+                  <small><strong>✗ {{ error }}</strong></small><br>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+        <!-- Botão -->
+        <button type="submit" class="btn btn-primary w-100">Enviar Contato</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
