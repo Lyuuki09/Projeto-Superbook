@@ -5,17 +5,31 @@
 {% block content %}
 <div class="container">
   <!-- Post Principal -->
-  <div class="card mb-4 shadow-sm">
-    <div class="card-header bg-primary text-white">
-      <h4 class="mb-0">🦸‍♂️ {{ post.autor.codinome }}</h4>
+  <div class="post-card mb-4">
+    <div class="post-header">
+      <div class="post-author-info">
+        {% if post.autor.imagem %}
+          <img src="{{ post.autor.imagem.url }}" alt="{{ post.autor.codinome }}" class="profile-pic">
+        {% else %}
+          <div class="profile-pic bg-info d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; border-radius: 50%;">
+            <span class="text-white fw-bold">🦸</span>
+          </div>
+        {% endif %}
+        <div>
+          <h5 class="mb-0">{{ post.autor.codinome }}</h5>
+          <small class="text-muted">{{ post.autor.cidade }}</small>
+        </div>
+      </div>
     </div>
-    <div class="card-body">
-      <p class="card-text">{{ post.mensagem|linebreaksbr }}</p>
-      <small class="text-muted">Publicado em {{ post.criado_em|date:"d/m/Y H:i" }}</small>
+    
+    <div class="post-body">
+      <p>{{ post.mensagem|linebreaksbr }}</p>
+      <small class="text-muted">Publicado em {{ post.criado_em|date:"d/m/Y à\s H:i" }}</small>
     </div>
-    <div class="card-footer">
-      <a href="{% url 'editar_post' post.pk %}" class="btn btn-sm btn-outline-primary">✏️ Editar</a>
-      <a href="{% url 'excluir_post' post.pk %}" class="btn btn-sm btn-outline-danger">🗑️ Excluir</a>
+    
+    <div class="post-actions">
+      <a href="{% url 'editar_post' post.pk %}" class="btn btn-sm btn-outline-primary me-1">✏️ Editar</a>
+      <a href="{% url 'excluir_post' post.pk %}" class="btn btn-sm btn-outline-danger me-1">🗑️ Excluir</a>
       <a href="{% url 'lista_posts' %}" class="btn btn-sm btn-outline-secondary">← Voltar</a>
     </div>
   </div>
@@ -27,14 +41,23 @@
       <h5 class="mb-3">💬 Comentários ({{ comentarios.count }})</h5>
       
       {% if comentarios %}
-        <div class="list-group mb-4">
+        <div class="mb-4">
           {% for comentario in comentarios %}
-            <div class="list-group-item">
-              <div class="d-flex w-100 justify-content-between">
-                <strong>{{ comentario.autor }}</strong>
-                <small class="text-muted">{{ comentario.criado_em|date:"d/m/Y H:i" }}</small>
+            <div class="comment-item">
+              <div class="d-flex gap-3">
+                <div class="comment-author">
+                  <div class="profile-pic bg-warning d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;">
+                    <span class="text-white fw-bold" style="font-size: 0.9rem;">💬</span>
+                  </div>
+                </div>
+                <div class="flex-grow-1">
+                  <div class="d-flex justify-content-between align-items-start mb-1">
+                    <strong>{{ comentario.autor }}</strong>
+                    <small class="text-muted">{{ comentario.criado_em|date:"d/m/Y à\s H:i" }}</small>
+                  </div>
+                  <p class="mb-0">{{ comentario.conteudo|linebreaksbr }}</p>
+                </div>
               </div>
-              <p class="mb-0 mt-2">{{ comentario.conteudo|linebreaksbr }}</p>
             </div>
           {% endfor %}
         </div>
@@ -43,12 +66,12 @@
       {% endif %}
 
       <!-- Formulário para Novo Comentário -->
-      <div class="card">
-        <div class="card-header">
+      <div class="card border-primary mt-4">
+        <div class="card-header bg-primary text-white">
           <h6 class="mb-0">📝 Deixe um comentário</h6>
         </div>
         <div class="card-body">
-          <form method="post">
+          <form method="post" novalidate>
             {% csrf_token %}
             
             <!-- Campo Autor -->
@@ -86,18 +109,34 @@
 
     <!-- Sidebar (Informações do Autor) -->
     <div class="col-md-4">
-      <div class="card shadow-sm">
-        <div class="card-header bg-success text-white">
-          <h6 class="mb-0">Sobre o Herói</h6>
+      <div class="card shadow-sm border-info">
+        <div class="card-header bg-info text-white">
+          <h6 class="mb-0">ℹ️ Sobre o Herói</h6>
         </div>
         <div class="card-body">
-          <p><strong>Codinome:</strong> {{ post.autor.codinome }}</p>
-          <p><strong>Nome Real:</strong> {{ post.autor.nome_real|default:"Desconhecido" }}</p>
-          <p><strong>Poder:</strong> {{ post.autor.poder_principal }}</p>
-          <p><strong>Cidade:</strong> {{ post.autor.cidade }}</p>
-          {% if post.autor.email_contato %}
-            <p><strong>Email:</strong> <a href="mailto:{{ post.autor.email_contato }}">{{ post.autor.email_contato }}</a></p>
+          {% if post.autor.imagem %}
+            <img src="{{ post.autor.imagem.url }}" alt="{{ post.autor.codinome }}" class="img-fluid rounded mb-3">
           {% endif %}
+          <dl class="row">
+            <dt class="col-sm-6">Codinome:</dt>
+            <dd class="col-sm-6">{{ post.autor.codinome }}</dd>
+            
+            <dt class="col-sm-6">Nome Real:</dt>
+            <dd class="col-sm-6">{{ post.autor.nome_real|default:"Desconhecido" }}</dd>
+            
+            <dt class="col-sm-6">Poder:</dt>
+            <dd class="col-sm-6">{{ post.autor.poder_principal }}</dd>
+            
+            <dt class="col-sm-6">Cidade:</dt>
+            <dd class="col-sm-6">{{ post.autor.cidade }}</dd>
+            
+            {% if post.autor.email_contato %}
+              <dt class="col-sm-6">Email:</dt>
+              <dd class="col-sm-6">
+                <a href="mailto:{{ post.autor.email_contato }}">{{ post.autor.email_contato }}</a>
+              </dd>
+            {% endif %}
+          </dl>
         </div>
       </div>
     </div>

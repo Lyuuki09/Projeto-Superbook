@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Vilões - SuperBook{% endblock %}
+
+{% block content %}
+<div class="villain-theme p-4 rounded mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="display-5 fw-bold text-danger mb-2">👹 Vilões do SuperBook</h1>
+            <p class="lead text-muted">Total de vilões cadastrados: <strong>{{ total_viloes }}</strong></p>
+        </div>
+        <a href="{% url 'criar_vilao' %}" class="btn btn-danger btn-lg">
+            <i class="bi bi-plus-circle"></i> Novo Vilão
+        </a>
+    </div>
+</div>
+
+{% if viloes %}
+    <div class="row">
+        {% for vilao in viloes %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="post-card villain-card h-100">
+                    <div class="post-header">
+                        <div class="post-author-info">
+                            {% if vilao.imagem %}
+                                <img src="{{ vilao.imagem.url }}" alt="{{ vilao.codinome }}" class="profile-pic">
+                            {% else %}
+                                <div class="profile-pic bg-danger d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; border-radius: 50%;">
+                                    <span class="text-white fw-bold">👹</span>
+                                </div>
+                            {% endif %}
+                            <div>
+                                <h5 class="mb-0 text-danger fw-bold">{{ vilao.codinome }}</h5>
+                                <small class="text-muted">{{ vilao.cidade }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="post-body">
+                        <p class="mb-2">
+                            <strong>Nome Real:</strong> {{ vilao.nome_real|default:"Desconhecido" }}
+                        </p>
+                        <p class="mb-2">
+                            <strong>Poder Principal:</strong> {{ vilao.poder_principal }}
+                        </p>
+                        {% if vilao.historia %}
+                            <p class="text-muted small">{{ vilao.historia|truncatewords:30 }}</p>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="post-footer">
+                        <small class="text-muted">Criado em {{ vilao.criado_em|date:"d/m/Y à\s H:i" }}</small>
+                    </div>
+                    
+                    <div class="post-actions mt-3">
+                        <a href="{% url 'vilao_detail' vilao.pk %}" class="btn btn-sm btn-outline-danger me-2">
+                            👀 Ver Detalhes
+                        </a>
+                        <a href="{% url 'editar_vilao' vilao.pk %}" class="btn btn-sm btn-outline-warning me-2">
+                            ✏️ Editar
+                        </a>
+                        <a href="{% url 'excluir_vilao' vilao.pk %}" class="btn btn-sm btn-outline-danger">
+                            🗑️ Excluir
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <!-- Paginação -->
+    {% if is_paginated %}
+        <nav aria-label="Paginação">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">Primeira</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    </li>
+                {% endif %}
+                
+                <li class="page-item active">
+                    <span class="page-link">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+                </li>
+                
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Próxima</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
+{% else %}
+    <div class="alert alert-info text-center">
+        <h5>Nenhum vilão cadastrado ainda!</h5>
+        <p>Seja o primeiro a criar um vilão para o SuperBook.</p>
+        <a href="{% url 'criar_vilao' %}" class="btn btn-danger">Criar Primeiro Vilão</a>
+    </div>
+{% endif %}
+{% endblock %}

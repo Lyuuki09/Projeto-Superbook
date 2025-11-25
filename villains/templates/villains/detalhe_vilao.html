@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}{{ vilao.codinome }} - SuperBook{% endblock %}
+
+{% block content %}
+<div class="villain-theme p-4 rounded mb-4">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1 class="display-5 fw-bold text-danger mb-0">{{ vilao.codinome }}</h1>
+            <small class="text-muted">Cadastrado em {{ vilao.criado_em|date:"d/m/Y à\s H:i" }}</small>
+        </div>
+        <a href="{% url 'lista_viloes' %}" class="btn btn-secondary">← Voltar à Listagem</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        {% if vilao.imagem %}
+            <img src="{{ vilao.imagem.url }}" alt="{{ vilao.codinome }}" class="img-fluid rounded shadow-lg">
+        {% else %}
+            <div class="bg-danger d-flex align-items-center justify-content-center rounded shadow-lg" style="height: 400px;">
+                <div class="text-center text-white">
+                    <div style="font-size: 80px;">👹</div>
+                    <p class="fw-bold mt-3">Sem foto</p>
+                </div>
+            </div>
+        {% endif %}
+        
+        <div class="card border-danger mt-4">
+            <div class="card-body">
+                <h5 class="card-title text-danger">Informações</h5>
+                <dl class="row">
+                    <dt class="col-sm-6">Nome Real:</dt>
+                    <dd class="col-sm-6">{{ vilao.nome_real|default:"Desconhecido" }}</dd>
+                    
+                    <dt class="col-sm-6">Cidade:</dt>
+                    <dd class="col-sm-6">{{ vilao.cidade }}</dd>
+                    
+                    <dt class="col-sm-6">Poder Principal:</dt>
+                    <dd class="col-sm-6">{{ vilao.poder_principal }}</dd>
+                    
+                    {% if vilao.email_contato %}
+                        <dt class="col-sm-6">Email:</dt>
+                        <dd class="col-sm-6">
+                            <a href="mailto:{{ vilao.email_contato }}">{{ vilao.email_contato }}</a>
+                        </dd>
+                    {% endif %}
+                </dl>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card border-danger shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-danger">Biografia</h5>
+                {% if vilao.historia %}
+                    <p class="card-text">{{ vilao.historia|linebreaks }}</p>
+                {% else %}
+                    <p class="text-muted">Nenhuma biografia cadastrada.</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="mt-4">
+            <a href="{% url 'editar_vilao' vilao.pk %}" class="btn btn-warning btn-lg me-2">
+                ✏️ Editar Vilão
+            </a>
+            <a href="{% url 'excluir_vilao' vilao.pk %}" class="btn btn-danger btn-lg">
+                🗑️ Excluir Vilão
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

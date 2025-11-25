@@ -1,10 +1,29 @@
-<div class="container">
-  <ul class="d-flex justify-content-center align-items-center list-unstyled mb-0 flex-wrap">
-    <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'lista_herois' %}">🦸‍♂️ Heróis</a></li>
-    <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'criar_heroi' %}">➕ Novo Herói</a></li>
-    <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'lista_posts' %}">📝 Posts</a></li>
-    <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'criar_post' %}">➕ Novo Post</a></li>
-    <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'contato' %}">📧 Contato</a></li>
-    <li class="mx-2"><a class="text-white text-decoration-none" href="/admin/">⚙️ Admin</a></li>
-  </ul>
-</div>
+{% load static %}
+<nav class="navbar-custom">
+    <div class="container-fluid d-flex align-items-center justify-content-between">
+        <!-- Logo e Título -->
+        <div class="brand-section d-flex align-items-center">
+            <img src="{% static 'img/logo.svg' %}" alt="SuperBook" class="brand-logo me-2">
+            <span class="brand-title fw-bold">SuperBook</span>
+        </div>
+        
+        <!-- Links de Navegação -->
+        <div class="nav-links d-flex gap-3 flex-wrap justify-content-center">
+            <a href="{% url 'lista_herois' %}" class="nav-link-item">🦸‍♂️ Heróis</a>
+            <a href="{% url 'criar_heroi' %}" class="nav-link-item">➕ Novo Herói</a>
+            <a href="{% url 'lista_posts' %}" class="nav-link-item">📝 Posts</a>
+            <a href="{% url 'criar_post' %}" class="nav-link-item">➕ Novo Post</a>
+            <a href="{% url 'lista_viloes' %}" class="nav-link-item">👹 Vilões</a>
+            <a href="{% url 'contato' %}" class="nav-link-item">📧 Contato</a>
+            <a href="/admin/" class="nav-link-item">⚙️ Admin</a>
+        </div>
+        
+        <!-- Perfil do Usuário (se existir) -->
+        {% if user.is_authenticated %}
+            <div class="user-profile">
+                {% comment %} Placeholder para foto de perfil {% endcomment %}
+                <span class="text-dark fw-semibold">{{ user.username }}</span>
+            </div>
+        {% endif %}
+    </div>
+</nav>

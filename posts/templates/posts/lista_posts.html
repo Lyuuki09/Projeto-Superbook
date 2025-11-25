@@ -4,31 +4,51 @@
 
 {% block content %}
 <div class="container">
-  <h2 class="mb-4">📝 Posts dos Heróis</h2>
-
-  <a href="{% url 'criar_post' %}" class="btn btn-success mb-3">➕ Novo Post</a>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>📝 Posts dos Heróis</h2>
+    <a href="{% url 'criar_post' %}" class="btn btn-success">➕ Novo Post</a>
+  </div>
 
   {% if posts %}
-    <ul class="list-group">
+    <div class="row">
       {% for post in posts %}
-        <li class="list-group-item">
-          <div class="d-flex w-100 justify-content-between align-items-start">
-            <div class="flex-grow-1">
-              <h5 class="mb-1">🦸‍♂️ {{ post.autor.codinome }}</h5>
-              <p class="mb-2">{{ post.mensagem|linebreaksbr }}</p>
-              <small class="text-muted">{{ post.criado_em|date:"d/m/Y H:i" }}</small>
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="post-card h-100">
+            <div class="post-header">
+              <div class="post-author-info">
+                {% if post.autor.imagem %}
+                  <img src="{{ post.autor.imagem.url }}" alt="{{ post.autor.codinome }}" class="profile-pic">
+                {% else %}
+                  <div class="profile-pic bg-info d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; border-radius: 50%;">
+                    <span class="text-white fw-bold">🦸</span>
+                  </div>
+                {% endif %}
+                <div>
+                  <h5 class="mb-0">{{ post.autor.codinome }}</h5>
+                  <small class="text-muted">{{ post.autor.cidade }}</small>
+                </div>
+              </div>
             </div>
-            <div class="btn-group ms-2">
-              <a href="{% url 'post_detail' post.pk %}" class="btn btn-sm btn-outline-info" title="Ver detalhes">👁️</a>
-              <a href="{% url 'editar_post' post.pk %}" class="btn btn-sm btn-outline-primary" title="Editar">✏️</a>
-              <a href="{% url 'excluir_post' post.pk %}" class="btn btn-sm btn-outline-danger" title="Excluir">🗑️</a>
+            
+            <div class="post-body">
+              <p class="text-muted small">{{ post.criado_em|date:"d/m/Y à\s H:i" }}</p>
+              <p class="mb-0">{{ post.mensagem|truncatewords:30|linebreaksbr }}</p>
+            </div>
+            
+            <div class="post-actions">
+              <a href="{% url 'post_detail' post.pk %}" class="btn btn-sm btn-outline-info me-1">👁️ Ver</a>
+              <a href="{% url 'editar_post' post.pk %}" class="btn btn-sm btn-outline-primary me-1">✏️ Editar</a>
+              <a href="{% url 'excluir_post' post.pk %}" class="btn btn-sm btn-outline-danger">🗑️ Excluir</a>
             </div>
           </div>
-        </li>
+        </div>
       {% endfor %}
-    </ul>
+    </div>
   {% else %}
-    <div class="alert alert-secondary">Nenhum post publicado ainda. <a href="{% url 'criar_post' %}">Crie um!</a></div>
+    <div class="alert alert-secondary text-center">
+      <h5>Nenhum post publicado ainda.</h5>
+      <p><a href="{% url 'criar_post' %}" class="btn btn-success mt-2">Crie o primeiro post!</a></p>
+    </div>
   {% endif %}
 </div>
 {% endblock %}

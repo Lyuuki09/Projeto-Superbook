@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo }} - SuperBook{% endblock %}
+
+{% block content %}
+<div class="villain-theme p-4 rounded mb-4">
+    <h1 class="display-5 fw-bold text-danger mb-0">{{ titulo }}</h1>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card border-danger shadow-sm">
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Erro no formulário:</strong>
+                            {% for error in form.non_field_errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.codinome.id_for_label }}" class="form-label fw-bold">Codinome *</label>
+                        {{ form.codinome }}
+                        {% if form.codinome.errors %}
+                            <div class="invalid-feedback d-block">{{ form.codinome.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.nome_real.id_for_label }}" class="form-label fw-bold">Nome Real</label>
+                                {{ form.nome_real }}
+                                {% if form.nome_real.errors %}
+                                    <div class="invalid-feedback d-block">{{ form.nome_real.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="{{ form.cidade.id_for_label }}" class="form-label fw-bold">Cidade *</label>
+                                {{ form.cidade }}
+                                {% if form.cidade.errors %}
+                                    <div class="invalid-feedback d-block">{{ form.cidade.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.poder_principal.id_for_label }}" class="form-label fw-bold">Poder Principal *</label>
+                        {{ form.poder_principal }}
+                        {% if form.poder_principal.errors %}
+                            <div class="invalid-feedback d-block">{{ form.poder_principal.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.email_contato.id_for_label }}" class="form-label fw-bold">Email de Contato</label>
+                        {{ form.email_contato }}
+                        {% if form.email_contato.errors %}
+                            <div class="invalid-feedback d-block">{{ form.email_contato.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="{{ form.imagem.id_for_label }}" class="form-label fw-bold">Foto do Vilão</label>
+                        {{ form.imagem }}
+                        <small class="form-text text-muted d-block mt-2">Formatos aceitos: JPG, PNG, GIF</small>
+                        {% if form.imagem.errors %}
+                            <div class="invalid-feedback d-block">{{ form.imagem.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="{{ form.historia.id_for_label }}" class="form-label fw-bold">História</label>
+                        {{ form.historia }}
+                        {% if form.historia.errors %}
+                            <div class="invalid-feedback d-block">{{ form.historia.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-danger btn-lg">
+                            <i class="bi bi-check-circle"></i> {{ botao }}
+                        </button>
+                        <a href="{% url 'lista_viloes' %}" class="btn btn-secondary btn-lg">
+                            <i class="bi bi-x-circle"></i> Cancelar
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Excluir Vilão - SuperBook{% endblock %}
+
+{% block content %}
+<div class="villain-theme p-4 rounded mb-4">
+    <h1 class="display-5 fw-bold text-danger mb-0">⚠️ Confirmar Exclusão</h1>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-danger shadow-sm">
+            <div class="card-body text-center">
+                <div style="font-size: 60px; color: #dc3545;">👹</div>
+                <h5 class="card-title mt-3 text-danger">{{ vilao.codinome }}</h5>
+                
+                <p class="card-text mt-4">
+                    Tem certeza que deseja excluir este vilão?
+                </p>
+                
+                <p class="text-muted">
+                    <strong>{{ vilao.codinome }}</strong> de <strong>{{ vilao.cidade }}</strong>
+                    <br>
+                    Poder: <strong>{{ vilao.poder_principal }}</strong>
+                </p>
+                
+                <div class="alert alert-danger mt-3">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    <strong>Atenção!</strong> Esta ação não pode ser desfeita.
+                </div>
+                
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    
+                    <button type="submit" class="btn btn-danger btn-lg me-2">
+                        🗑️ Sim, Excluir Vilão
+                    </button>
+                    <a href="{% url 'vilao_detail' vilao.pk %}" class="btn btn-secondary btn-lg">
+                        ← Cancelar
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

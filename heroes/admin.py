@@ -10,7 +10,7 @@ class HeroAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Identidade Secreta', {
-            'fields': ('codinome', 'nome_real', 'email_contato')
+            'fields': ('codinome', 'nome_real', 'email_contato', 'imagem')
         }),
         ('Informações Gerais', {
             'fields': ('poder_principal', 'cidade', 'historia')
