@@ -2,81 +2,25 @@
 
 {% block title %}Lista de Posts - SuperBook{% endblock %}
 
-{% block extra_css %}
-<style>
-    .post-list {
-        list-style: none;
-        padding: 0;
-    }
-    
-    .post-item {
-        background-color: #f8f9fa;
-        margin: 15px 0;
-        padding: 20px;
-        border-radius: 8px;
-        border-left: 4px solid #28a745;
-    }
-    
-    .post-author {
-        font-weight: bold;
-        color: #28a745;
-        font-size: 1.1em;
-        margin-bottom: 10px;
-    }
-    
-    .post-message {
-        color: #333;
-        line-height: 1.6;
-        margin-bottom: 10px;
-    }
-    
-    .post-date {
-        color: #888;
-        font-size: 0.9em;
-        font-style: italic;
-    }
-    
-    .no-posts {
-        text-align: center;
-        color: #666;
-        font-style: italic;
-        padding: 40px;
-    }
-    
-    .post-stats {
-        background-color: #e9ecef;
-        padding: 10px;
-        border-radius: 5px;
-        margin-top: 10px;
-        font-size: 0.9em;
-        color: #666;
-    }
-</style>
-{% endblock %}
-
 {% block content %}
 <div class="container">
-    <h1 class="page-title">📝 Posts dos Heróis</h1>
-    
-    {% if posts %}
-        <ul class="post-list">
-            {% for post in posts %}
-            <li class="post-item">
-                <div class="post-author">🦸‍♂️ {{ post.autor.codinome }}</div>
-                <div class="post-message">{{ post.mensagem }}</div>
-                <div class="post-date">Postado em: {{ post.criado_em|date:"d/m/Y H:i" }}</div>
-                <div class="post-stats">
-                    ID do Post: {{ post.id }} | 
-                    Autor ID: {{ post.autor.id }}
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <div class="no-posts">
-            <p>Nenhum post publicado ainda.</p>
-            <p>Acesse o <a href="/admin/">admin</a> para adicionar posts!</p>
-        </div>
-    {% endif %}
+  <h2 class="mb-4">📝 Posts dos Heróis</h2>
+
+  {% if posts %}
+    <ul class="list-group">
+      {% for post in posts %}
+        <li class="list-group-item">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">🦸‍♂️ {{ post.autor.codinome }}</h5>
+            <small class="text-muted">{{ post.criado_em|date:"d/m/Y H:i" }}</small>
+          </div>
+          <p class="mb-1">{{ post.mensagem }}</p>
+          <small class="text-muted">ID do Post: {{ post.id }} | Autor ID: {{ post.autor.id }}</small>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="alert alert-secondary">Nenhum post publicado ainda. Acesse o <a href="/admin/">admin</a> para adicionar posts!</div>
+  {% endif %}
 </div>
 {% endblock %}

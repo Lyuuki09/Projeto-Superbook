@@ -1,5 +1,7 @@
-<ul>
-    <li><a href="{% url 'heroes:lista_herois' %}">🦸‍♂️ Heróis</a></li>
-    <li><a href="{% url 'posts:lista_posts' %}">📝 Posts</a></li>
-    <li><a href="/admin/">⚙️ Admin</a></li>
-</ul>
+<div class="container">
+    <ul class="d-flex justify-content-center align-items-center list-unstyled mb-0">
+        <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'lista_herois' %}">🦸‍♂️ Heróis</a></li>
+        <li class="mx-2"><a class="text-white text-decoration-none" href="{% url 'lista_posts' %}">📝 Posts</a></li>
+        <li class="mx-2"><a class="text-white text-decoration-none" href="/admin/">⚙️ Admin</a></li>
+    </ul>
+</div>
