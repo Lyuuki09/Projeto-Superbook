@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.autor.codinome }} - SuperBook{% endblock %}
+
+{% block content %}
+<div class="container">
+  <!-- Post Principal -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">🦸‍♂️ {{ post.autor.codinome }}</h4>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ post.mensagem|linebreaksbr }}</p>
+      <small class="text-muted">Publicado em {{ post.criado_em|date:"d/m/Y H:i" }}</small>
+    </div>
+    <div class="card-footer">
+      <a href="{% url 'editar_post' post.pk %}" class="btn btn-sm btn-outline-primary">✏️ Editar</a>
+      <a href="{% url 'excluir_post' post.pk %}" class="btn btn-sm btn-outline-danger">🗑️ Excluir</a>
+      <a href="{% url 'lista_posts' %}" class="btn btn-sm btn-outline-secondary">← Voltar</a>
+    </div>
+  </div>
+
+  <!-- Seção de Comentários -->
+  <div class="row">
+    <div class="col-md-8">
+      <!-- Lista de Comentários -->
+      <h5 class="mb-3">💬 Comentários ({{ comentarios.count }})</h5>
+      
+      {% if comentarios %}
+        <div class="list-group mb-4">
+          {% for comentario in comentarios %}
+            <div class="list-group-item">
+              <div class="d-flex w-100 justify-content-between">
+                <strong>{{ comentario.autor }}</strong>
+                <small class="text-muted">{{ comentario.criado_em|date:"d/m/Y H:i" }}</small>
+              </div>
+              <p class="mb-0 mt-2">{{ comentario.conteudo|linebreaksbr }}</p>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="alert alert-info">Nenhum comentário ainda. Seja o primeiro a comentar!</div>
+      {% endif %}
+
+      <!-- Formulário para Novo Comentário -->
+      <div class="card">
+        <div class="card-header">
+          <h6 class="mb-0">📝 Deixe um comentário</h6>
+        </div>
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
+            
+            <!-- Campo Autor -->
+            <div class="mb-3">
+              <label for="{{ form_comentario.autor.id_for_label }}" class="form-label">Nome</label>
+              {{ form_comentario.autor }}
+              {% if form_comentario.autor.errors %}
+                <div class="alert alert-danger mt-2 p-2">
+                  {% for error in form_comentario.autor.errors %}
+                    <small>✗ {{ error }}</small><br>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Campo Conteúdo -->
+            <div class="mb-3">
+              <label for="{{ form_comentario.conteudo.id_for_label }}" class="form-label">Comentário</label>
+              {{ form_comentario.conteudo }}
+              {% if form_comentario.conteudo.errors %}
+                <div class="alert alert-danger mt-2 p-2">
+                  {% for error in form_comentario.conteudo.errors %}
+                    <small>✗ {{ error }}</small><br>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Botão de Envio -->
+            <button type="submit" class="btn btn-primary w-100">Enviar Comentário</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar (Informações do Autor) -->
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-success text-white">
+          <h6 class="mb-0">Sobre o Herói</h6>
+        </div>
+        <div class="card-body">
+          <p><strong>Codinome:</strong> {{ post.autor.codinome }}</p>
+          <p><strong>Nome Real:</strong> {{ post.autor.nome_real|default:"Desconhecido" }}</p>
+          <p><strong>Poder:</strong> {{ post.autor.poder_principal }}</p>
+          <p><strong>Cidade:</strong> {{ post.autor.cidade }}</p>
+          {% if post.autor.email_contato %}
+            <p><strong>Email:</strong> <a href="mailto:{{ post.autor.email_contato }}">{{ post.autor.email_contato }}</a></p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

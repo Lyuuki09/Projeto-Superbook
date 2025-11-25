@@ -6,21 +6,29 @@
 <div class="container">
   <h2 class="mb-4">📝 Posts dos Heróis</h2>
 
+  <a href="{% url 'criar_post' %}" class="btn btn-success mb-3">➕ Novo Post</a>
+
   {% if posts %}
     <ul class="list-group">
       {% for post in posts %}
         <li class="list-group-item">
-          <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">🦸‍♂️ {{ post.autor.codinome }}</h5>
-            <small class="text-muted">{{ post.criado_em|date:"d/m/Y H:i" }}</small>
+          <div class="d-flex w-100 justify-content-between align-items-start">
+            <div class="flex-grow-1">
+              <h5 class="mb-1">🦸‍♂️ {{ post.autor.codinome }}</h5>
+              <p class="mb-2">{{ post.mensagem|linebreaksbr }}</p>
+              <small class="text-muted">{{ post.criado_em|date:"d/m/Y H:i" }}</small>
+            </div>
+            <div class="btn-group ms-2">
+              <a href="{% url 'post_detail' post.pk %}" class="btn btn-sm btn-outline-info" title="Ver detalhes">👁️</a>
+              <a href="{% url 'editar_post' post.pk %}" class="btn btn-sm btn-outline-primary" title="Editar">✏️</a>
+              <a href="{% url 'excluir_post' post.pk %}" class="btn btn-sm btn-outline-danger" title="Excluir">🗑️</a>
+            </div>
           </div>
-          <p class="mb-1">{{ post.mensagem }}</p>
-          <small class="text-muted">ID do Post: {{ post.id }} | Autor ID: {{ post.autor.id }}</small>
         </li>
       {% endfor %}
     </ul>
   {% else %}
-    <div class="alert alert-secondary">Nenhum post publicado ainda. Acesse o <a href="/admin/">admin</a> para adicionar posts!</div>
+    <div class="alert alert-secondary">Nenhum post publicado ainda. <a href="{% url 'criar_post' %}">Crie um!</a></div>
   {% endif %}
 </div>
 {% endblock %}
