@@ -27,9 +27,18 @@
       <small class="text-muted">Publicado em {{ post.criado_em|date:"d/m/Y à\s H:i" }}</small>
     </div>
     
-    <div class="post-actions">
-      <a href="{% url 'editar_post' post.pk %}" class="btn btn-sm btn-outline-primary me-1">✏️ Editar</a>
-      <a href="{% url 'excluir_post' post.pk %}" class="btn btn-sm btn-outline-danger me-1">🗑️ Excluir</a>
+    <div class="post-actions d-flex align-items-center gap-2">
+      <form action="{% url 'toggle_pow' post.pk %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <button class="btn btn-sm btn-outline-secondary">💥 POW</button>
+      </form>
+      <span class="text-muted">{{ post.likes.count }} curtidas</span>
+
+      {% if request.user.is_authenticated and post.autor.usuario_id == request.user.id %}
+        <a href="{% url 'editar_post' post.pk %}" class="btn btn-sm btn-outline-primary me-1">✏️ Editar</a>
+        <a href="{% url 'excluir_post' post.pk %}" class="btn btn-sm btn-outline-danger me-1">🗑️ Excluir</a>
+      {% endif %}
+
       <a href="{% url 'lista_posts' %}" class="btn btn-sm btn-outline-secondary">← Voltar</a>
     </div>
   </div>

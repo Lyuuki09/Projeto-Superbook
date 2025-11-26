@@ -8,5 +8,6 @@ urlpatterns = [
     path('<int:pk>/', views.post_detail_fbv, name='post_detail'),
     path('<int:pk>/editar/', views.PostUpdateView.as_view(), name='editar_post'),
     path('<int:pk>/excluir/', views.PostDeleteView.as_view(), name='excluir_post'),
+    path('<int:pk>/pow/', views.toggle_pow, name='toggle_pow'),
     path('cbv-lista/', views.PostListView.as_view(), name='cbv_lista_posts'),
 ]

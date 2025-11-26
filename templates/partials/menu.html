@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 <nav class="navbar-custom">
     <div class="container-fluid d-flex align-items-center justify-content-between">
         <!-- Logo e Título -->
@@ -20,9 +21,11 @@
         
         <!-- Perfil do Usuário (se existir) -->
         {% if user.is_authenticated %}
-            <div class="user-profile">
-                {% comment %} Placeholder para foto de perfil {% endcomment %}
+            <div class="user-profile d-flex align-items-center gap-2">
                 <span class="text-dark fw-semibold">{{ user.username }}</span>
+                {% if user|has_hero and user.hero.imagem %}
+                    <img src="{{ user.hero.imagem.url }}" alt="" class="profile-pic rounded-circle" style="width:36px; height:36px; object-fit:cover;">
+                {% endif %}
             </div>
         {% endif %}
     </div>

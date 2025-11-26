@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SuperBook</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(180deg, #1a2b63, #223b7a);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo {
+      width: 40%;
+      max-width: 400px;
+      animation: pulse 2s ease-in-out 2;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.2);
+      }
+    }
+  </style>
+
+  <script>
+    // Após 4 segundos, redireciona para a lista de posts
+    setTimeout(() => {
+      window.location.href = "{% url 'lista_posts' %}";
+    }, 4000);
+  </script>
+</head>
+
+<body>
+  <img src="{% static 'img/logo.png' %}" alt="SuperBook" class="logo">
+</body>
+</html>

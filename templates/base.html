@@ -22,6 +22,15 @@
 <body>
     {% include 'partials/menu.html' %}
     
+    <!-- Mensagens do Django -->
+    <div class="container mt-3">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
     <main class="container-fluid mt-4">
         {% block content %}{% endblock %}
     </main>

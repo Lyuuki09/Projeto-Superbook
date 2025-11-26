@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 500px;">
+  <div class="card shadow-sm p-4 text-center">
+    <h3 class="mb-4">Entrar com Google</h3>
+
+    <p class="text-muted">
+      Você está prestes a entrar usando sua conta do <strong>Google</strong>.
+      Clique em <strong>Continuar</strong> para prosseguir com o login seguro.
+    </p>
+
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger w-100 mt-3">
+        <i class="bi bi-google"></i> Continuar com Google
+      </button>
+    </form>
+
+    <hr class="my-4">
+
+    <p>
+      <a href="{% url 'account_login' %}" class="text-decoration-none">
+        ← Voltar para o login normal
+      </a>
+    </p>
+  </div>
+</div>
+{% endblock %}
